@@ -1,3 +1,7 @@
+# Bitcoin-style rounding (8 decimal places)
+def btc(value):
+    return round(value, 8)
+
 def validate_transaction(tx, utxo_manager, mempool):
     seen_inputs = set()
     input_sum = 0.0
@@ -26,17 +30,17 @@ def validate_transaction(tx, utxo_manager, mempool):
             return False, "UTXO owner mismatch"
 
         seen_inputs.add(key)
-        input_sum += utxo["amount"]
+        input_sum = btc(input_sum + utxo["amount"])
 
     # 2. Validate outputs
     for out in tx["outputs"]:
         if out["amount"] < 0:
             return False, "Negative output amount"
-        output_sum += out["amount"]
+        output_sum = btc(output_sum + out["amount"])
 
     # 3. Balance check
     if input_sum < output_sum:
         return False, "Insufficient funds"
 
-    fee = input_sum - output_sum
+    fee = btc(input_sum - output_sum)
     return True, f"Transaction valid. Fee = {fee}"
