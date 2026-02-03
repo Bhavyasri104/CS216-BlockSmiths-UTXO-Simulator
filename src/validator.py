@@ -1,46 +1,27 @@
-# Bitcoin-style rounding (8 decimal places)
-def btc(value):
-    return round(value, 8)
+def validate_transaction(tx, utxo_manager):
+    seen = set()
+    total_in = 0.0
+    total_out = 0.0
 
-def validate_transaction(tx, utxo_manager, mempool):
-    seen_inputs = set()
-    input_sum = 0.0
-    output_sum = 0.0
-
-    # 1. Validate inputs
     for inp in tx["inputs"]:
-        key = (inp["prev_tx"], inp["index"])
+        ref = (inp["prev_tx"], inp["index"])
 
-        # Same UTXO twice in same transaction
-        if key in seen_inputs:
-            return False, "Double spending in same transaction"
+        if ref in seen:
+            return False, "Double-spend in same transaction"
 
-        # UTXO must exist
-        if not utxo_manager.exists(inp["prev_tx"], inp["index"]):
-            return False, f"UTXO {inp['prev_tx']}:{inp['index']} does not exist"
+        if not utxo_manager.exists(*ref):
+            return False, "UTXO does not exist"
 
-        # UTXO already used in mempool
-        if key in mempool.spent_utxos:
-            return False, f"UTXO {inp['prev_tx']}:{inp['index']} already spent in mempool"
+        utxo = utxo_manager.utxo_set[ref]
+        total_in += utxo["amount"]
+        seen.add(ref)
 
-        utxo = utxo_manager.utxo_set[key]
-
-        # Ownership check
-        if utxo["owner"] != inp["owner"]:
-            return False, "UTXO owner mismatch"
-
-        seen_inputs.add(key)
-        input_sum = btc(input_sum + utxo["amount"])
-
-    # 2. Validate outputs
     for out in tx["outputs"]:
         if out["amount"] < 0:
             return False, "Negative output amount"
-        output_sum = btc(output_sum + out["amount"])
+        total_out += out["amount"]
 
-    # 3. Balance check
-    if input_sum < output_sum:
-        return False, "Insufficient funds"
+    if total_out > total_in:
+        return False, "Outputs exceed inputs"
 
-    fee = btc(input_sum - output_sum)
-    return True, f"Transaction valid. Fee = {fee}"
+    return True, "Valid"

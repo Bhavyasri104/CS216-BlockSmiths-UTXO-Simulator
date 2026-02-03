@@ -4,7 +4,7 @@ class UTXOManager:
 
     def add_utxo(self, tx_id, index, amount, owner):
         self.utxo_set[(tx_id, index)] = {
-            "amount": amount,
+            "amount": round(amount, 8),
             "owner": owner
         }
 
@@ -20,7 +20,7 @@ class UTXOManager:
         for utxo in self.utxo_set.values():
             if utxo["owner"] == owner:
                 balance += utxo["amount"]
-        return balance
+        return round(balance, 8)
 
     def get_utxos_for_owner(self, owner):
         result = []
