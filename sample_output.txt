@@ -1,0 +1,272 @@
+=== Bitcoin Transaction Simulator ===
+Initial UTXOs ( Genesis Block ) :
+- Alice : 50.0 BTC
+- Bob : 30.0 BTC
+- Charlie : 20.0 BTC
+- David : 10.0 BTC
+- Eve : 5.0 BTC
+
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 1
+Enter sender : Alice
+Available balance : 50.0 BTC
+Enter recipient : Charlie
+Enter amount : 20
+
+Creating transaction ...
+Transaction valid ! Fee : 0.001 BTC
+Transaction ID : tx_alice_charlie_001
+Transaction added to mempool .
+Mempool now has 1 transactions .
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 1
+Enter sender : Alice
+Available balance : 50.0 BTC
+Enter recipient : Bob
+Enter amount : 20
+
+Creating transaction ...
+Transaction valid ! Fee : 0.001 BTC
+Transaction ID : tx_alice_bob_002
+Transaction rejected : UTXO genesis:0 already spent by tx_alice_charlie_001
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 1
+Enter sender : Bob
+Available balance : 30.0 BTC
+Enter recipient : Charlie
+Enter amount : 20
+
+Creating transaction ...
+Transaction valid ! Fee : 0.001 BTC
+Transaction ID : tx_bob_charlie_003
+Transaction added to mempool .
+Mempool now has 2 transactions .
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 2
+('genesis', 0) -> {'amount': 50.0, 'owner': 'Alice'}
+('genesis', 1) -> {'amount': 30.0, 'owner': 'Bob'}
+('genesis', 2) -> {'amount': 20.0, 'owner': 'Charlie'}
+('genesis', 3) -> {'amount': 10.0, 'owner': 'David'}
+('genesis', 4) -> {'amount': 5.0, 'owner': 'Eve'}
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 3
+tx_alice_charlie_001
+tx_bob_charlie_003
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 4
+Enter miner name : Eve
+Mining block ...
+Selected 2 transactions from mempool .
+Total fees : 0.002 BTC
+Miner Eve receives 0.002 BTC
+Block mined successfully !
+Removed 2 transactions from mempool .
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 2
+('genesis', 2) -> {'amount': 20.0, 'owner': 'Charlie'}
+('genesis', 3) -> {'amount': 10.0, 'owner': 'David'}
+('genesis', 4) -> {'amount': 5.0, 'owner': 'Eve'}
+('tx_alice_charlie_001', 0) -> {'amount': 20.0, 'owner': 'Charlie'}
+('tx_alice_charlie_001', 1) -> {'amount': 29.999, 'owner': 'Alice'}
+('tx_bob_charlie_003', 0) -> {'amount': 20.0, 'owner': 'Charlie'}
+('tx_bob_charlie_003', 1) -> {'amount': 9.999, 'owner': 'Bob'}
+('coinbase', 0) -> {'amount': 0.002, 'owner': 'Eve'}
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 1
+Enter sender : Alice
+Available balance : 29.999 BTC
+Enter recipient : Bob
+Enter amount : -2
+
+Creating transaction ...
+Invalid amount
+
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 1
+Enter sender : Bob
+Available balance : 9.999 BTC
+Enter recipient : Charlie
+Enter amount : 9.999
+
+Creating transaction ...
+Transaction valid ! Fee : 0.0 BTC
+Transaction ID : tx_bob_charlie_004
+Transaction added to mempool .
+Mempool now has 1 transactions .
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 5
+
+Running test ...
+
+Test 1: Basic Valid Transaction – PASS
+
+Test 2: Multiple Inputs – PASS
+
+Test 3: Double-Spend in Same Transaction – PASS
+
+Test 4: Mempool Double-Spend – PASS
+
+Test 5: Insufficient Funds – PASS
+
+Test 6: Negative Amount – PASS
+
+Test 7: Zero Fee Transaction – PASS
+
+Test 8: Race Attack (First-Seen Rule) – PASS
+
+Test 9: Complete Mining Flow – PASS
+
+Test 10: Unconfirmed Chain Rejected – PASS
+
+All mandatory tests completed
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 6 
+
+=== Bitcoin Transaction Simulator ===
+Initial UTXOs ( Genesis Block ) :
+- Alice : 50.0 BTC
+- Bob : 30.0 BTC
+- Charlie : 20.0 BTC
+- David : 10.0 BTC
+- Eve : 5.0 BTC
+
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 1
+Enter sender : Alice
+Available balance : 50.0 BTC
+Enter recipient : Bob
+Enter amount : 10
+
+Creating transaction ...
+Transaction valid ! Fee : 0.001 BTC
+Transaction ID : tx_alice_bob_001
+Transaction added to mempool .
+Mempool now has 1 transactions .
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 4
+Enter miner name : Eve
+Mining block ...
+Selected 1 transactions from mempool .
+Total fees : 0.001 BTC
+Miner Eve receives 0.001 BTC
+Block mined successfully !
+Removed 1 transactions from mempool .
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 1
+Enter sender : Eve
+Available balance : 5.001 BTC
+Enter recipient : Bob
+Enter amount : 2
+
+Creating transaction ...
+Transaction valid ! Fee : 0.001 BTC
+Transaction ID : tx_eve_bob_002
+Transaction added to mempool .
+Mempool now has 1 transactions .
+Main Menu :
+1. Create new transaction
+2. View UTXO set
+3. View mempool
+4. Mine block
+5. Run test scenarios
+6. Exit
+
+Enter choice : 6
